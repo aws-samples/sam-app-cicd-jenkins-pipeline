@@ -1,0 +1,21 @@
+version = 0.1
+
+[app.deploy.parameters]
+stack_name = "sam-app"
+s3_bucket = "aws-sam-cli-managed-dev-pipeline-artifactsbucket"
+s3_prefix = "cidr-api-sam-cli"
+region = "us-west-2"
+profile = "default"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
+
+[pipeline.deploy.parameters]
+stack_name = "sam-jenkins-stack"
+s3_bucket = "aws-sam-cli-managed-dev-pipeline-artifactsbucket"
+s3_prefix = "sam-jenkins"
+region = "us-west-2"
+profile = "default"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
