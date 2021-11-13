@@ -1,8 +1,8 @@
 
-# CI/CD of Serverless API using SAM CLI generated Jenkins pipeline
+# CI/CD of Serverless API using AWS SAM CLI generated Jenkins pipeline
 
-This project uses the SAM CLI to generate a Jenkins pipeline to manage the CI/CD of a Serverless API.
-SAM CLI commands - 'sam pipeline bootstrap' and 'sam pipeline init' are used to generate a cookie-cutter pipeline and the necessary iam resources.
+This project uses the AWS SAM CLI to generate a Jenkins pipeline to manage the CI/CD of a Serverless API.
+AWS SAM CLI commands - 'sam pipeline bootstrap' and 'sam pipeline init' are used to generate a cookie-cutter pipeline and the necessary iam resources.
 The generated Jenkins pipeline(Jenkinsfile) can be edited to add/configure the required stages, and add additional pipeline steps.
 A pre-configured Jenkinsfile (with pipeline steps for unit-tests, (optional)SonarQube code-scan, integration-tests), and steps to deploy the pipeline are provided below. 
 
@@ -30,31 +30,31 @@ A pre-configured Jenkinsfile (with pipeline steps for unit-tests, (optional)Sona
 
 ## Architecture
 
-Cidr API deployed using SAM CLI. 
+Cidr API deployed using AWS SAM CLI. 
 The OpenAPI doc for this API is located at [docs/openapi3.yml](docs/openapi3.yml)
 ![Architecture2](docs/cidr_arch1.png)
 
 
-CI/CD of Cidr API using SAM CLI generated Jenkins pipeline
+CI/CD of Cidr API using AWS SAM CLI generated Jenkins pipeline
 ![Architecture1](docs/cidr_arch4.png)
 
 ## Pre-requisites
     * AWS Cloud9 IDE 
     * Install Python3.7
     * Install AWS SAM-CLI
-    * (Optional)Get S3 bucket name, if you would like to re-use an existing bucket for SAM CLI artifacts
+    * (Optional)Get S3 bucket name, if you would like to re-use an existing bucket for AWS SAM CLI artifacts
     * SonarQube-scan is an optional step in the pipeline, user has to uncomment the step in the Jenkinsfile
 
 
-## Setup CodeCommit repository
+## Setup AWS CodeCommit repository
 ```shell
 # Configure AWS named profile for the required {account,region} environment
 aws configure --profile default
 
-#Create CodeCommit repo
+#Create AWS CodeCommit repo
 aws codecommit create-repository --repository-name MyDemoRepo-Sam-Cli
 
-#Create HTTPS Git credentials for CodeCommit
+#Create HTTPS Git credentials for AWS CodeCommit
 #Add remote 
 git remote add codecommit https://git-codecommit.us-west-2.amazonaws.com/v1/repos/MyDemoRepo-Sam-Cli
 
@@ -76,7 +76,7 @@ pytest ./
 
 ```
 
-## Install Jenkins on Cloud9 EC2 instance
+## Install Jenkins on AWS Cloud9 EC2 instance
 ```shell
 sudo yum update –y
 
@@ -109,7 +109,7 @@ sudo systemctl status jenkins
 
 ```
 
-## (Optional) Install SonarQube Scanner on Cloud9 EC2 instance
+## (Optional) Install SonarQube Scanner on AWS Cloud9 EC2 instance
 SonarQube is licensed under LGPL-3.0. This step, and following two steps are optional.
 ```shell
 wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip -P /tmp
@@ -118,7 +118,7 @@ cp sonar-scanner-4.6.2.2472-linux sonar-scanner
 ln -sf /home/ec2-user/environment/sonar-scanner/bin/sonar-scanner /usr/bin/sonar-scanner
 ```
 
-## (Optional) Start SonarQube server on EC2
+## (Optional) Start SonarQube server on Amazon EC2 instance
 For this sample, a SonarQube server on EC2 is started using an AMI from AWS Marketplace
 ![BitnamiSonar](docs/sonarqube_bitnami.png)
 
@@ -128,11 +128,11 @@ Configure the SonarQube server url and SonarQube access credentials in Jenkins
 ![SonarJenkins](docs/integrate_jenkins_sonar.png)
 
 
-## CI/CD with SAM CLI generated Jenkins Pipeline
+## CI/CD with AWS SAM CLI generated Jenkins Pipeline
 * ### Run 'sam pipeline bootstrap' - This sets up IAM roles required for the pipeline 
 
 ```
-# Sam pipeline bootstrap to create required iam roles
+# Run 'sam pipeline bootstrap' to create required iam roles
 # Create a single stage named 'Dev', use us-west-2, create a new bucket, use default profile
 # For this demo only 1 stage is required. For cross-account deploy, create another stage named 'Prod' with respective params
 sam pipeline bootstrap
